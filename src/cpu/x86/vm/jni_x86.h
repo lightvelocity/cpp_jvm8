@@ -8,8 +8,8 @@
 #ifndef CPU_X86_VM_JNI_X86_H_
 #define CPU_X86_VM_JNI_X86_H_
 
-typedef int jint;
-typedef long jlong; // FIXME
-typedef signed char jbyte;
+typedef int         jint;  // 32bits
+typedef long long   jlong; // 64bits
+typedef signed char jbyte; //  8bits
 
 #endif /* CPU_X86_VM_JNI_X86_H_ */

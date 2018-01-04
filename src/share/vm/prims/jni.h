@@ -16,6 +16,8 @@ typedef short		   jshort;
 typedef float		   jfloat;
 typedef double		   jdouble;
 
+typedef jint		   jsize;
+
 
 
 #endif /* SHARE_VM_PRIMS_JNI_H_ */

@@ -46,6 +46,10 @@ public:
 		_current += 8;
 		return res;
 	}
+
+	void skip_u1_fast(int length) {
+		_current += length;
+	}
 };
 
 

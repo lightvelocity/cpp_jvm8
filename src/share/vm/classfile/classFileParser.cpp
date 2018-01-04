@@ -71,6 +71,94 @@ void ClassFileParser::parse_constant_pool_entries(int length) {
 				u2 name_index = cfs->get_u2_fast();
 				_cp->klass_index_at_put(index, name_index);
 			}
+			break;
+			case JVM_CONSTANT_Fieldref:
+			{
+				u2 class_index = cfs->get_u2_fast();
+				u2 name_and_type_index = cfs->get_u2_fast();
+				_cp->field_at_put(index, class_index, name_and_type_index);
+			}
+			break;
+			case JVM_CONSTANT_Methodref:
+			{
+				u2 class_index = cfs->get_u2_fast();
+				u2 name_and_type_index = cfs->get_u2_fast();
+				_cp->method_at_put(index, class_index, name_and_type_index);
+			}
+			break;
+			case JVM_CONSTANT_InterfaceMethodref:
+			{
+				u2 class_index = cfs->get_u2_fast();
+				u2 name_and_type_index = cfs->get_u2_fast();
+				_cp->interface_method_at_put(index, class_index, name_and_type_index);
+			}
+			break;
+			case JVM_CONSTANT_String:
+			{
+				u2 string_index = cfs->get_u2_fast();
+				_cp->string_index_at_put(index, string_index);
+			}
+			break;
+			case JVM_CONSTANT_MethodHandle:
+			case JVM_CONSTANT_MethodType:
+				if (tag == JVM_CONSTANT_MethodHandle) {
+					u1 ref_kind = cfs->get_u1_fast();
+					u2 method_index = cfs->get_u2_fast();
+					_cp->method_handle_index_at_put(index, ref_kind, method_index);
+				} else if (tag == JVM_CONSTANT_MethodType) {
+					u2 signature_index = cfs->get_u2_fast();
+					_cp->method_type_index_at_put(index, signature_index);
+				}
+			break;
+			case JVM_CONSTANT_InvokeDynamic:
+			{
+				u2 bootstrap_specifier_index = cfs->get_u2_fast();
+				u2 name_and_type_index = cfs->get_u2_fast();
+				if (_max_bootstrap_specifier_index < (int) bootstrap_specifier_index)
+					_max_bootstrap_specifier_index = (int) bootstrap_specifier_index;
+				_cp->invoke_dynamic_at_put(index, bootstrap_specifier_index, name_and_type_index);
+			}
+			break;
+			case JVM_CONSTANT_Integer:
+			{
+				u4 bytes = cfs->get_u4_fast();
+				_cp->int_at_put(index, (jint) bytes);
+			}
+			break;
+			case JVM_CONSTANT_Float:
+			{
+				u4 bytes = cfs->get_u4_fast();
+				_cp->float_at_put(index, *(jfloat*)&bytes);
+			}
+			break;
+			case JVM_CONSTANT_Long:
+			{
+				u8 bytes = cfs->get_u8_fast();
+				_cp->long_at_put(index, bytes);
+			}
+			index++ // skip entry following eight-byte constant, see JVM book p.98
+			break;
+			case JVM_CONSTANT_Double:
+			{
+				u8 bytes = cfs->get_u8_fast();
+				_cp->double_at_put(index, *(jdouble*)&bytes);
+			}
+			index++; // skip entry following eight-byte constant, see JVM book p.98
+			break;
+			case JVM_CONSTANT_NameAndType:
+			{
+				u2 name_index = cfs->get_u2_fast();
+				u2 signature_index = cfs->get_u2_fast();
+				_cp->name_and_type_at_put(index, name_index, signature_index);
+			}
+			break;
+			case JVM_CONSTANT_Utf8:
+			{
+				u2 utf8_length = cfs->get_u2_fast();
+				u1* utf8_buffer = cfs->get_u1_fast();
+				cfs->skip_u1_fast(utf8_length);
+
+			}
 		}
 	}
 

@@ -14,9 +14,13 @@ class Bytes {
 private:
 
 public:
-	 static inline u2 get_native_u2(address p) { return *(u2*)p; }
+	static inline u2 get_native_u2(address p) { return *(u2*)p; }
 	static inline u4 get_native_u4(address p) { return *(u4*)p; }
 	static inline u8 get_native_u8(address p) { return *(u8*)p; }
+
+	static inline void put_native_u2(address p, u2 x) { *(u2*)p = x; }
+	static inline void put_native_u4(address p, u4 x) { *(u4*)p = x; }
+	static inline void put_native_u8(address p, u8 x) { *(u8*)p = x; }
 
 	// x86 little-endian to Java big-endian
 	static inline u2 get_Java_u2(address p) { return swap_u2(get_native_u2(p)); }

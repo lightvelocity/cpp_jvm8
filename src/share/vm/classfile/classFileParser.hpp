@@ -19,6 +19,8 @@ private:
 	ClassLoaderData* _loader_data;
 	KlassHandle _host_klass;
 
+	int _max_bootstrap_specifier_index; // detects BSS values
+
 	instanceKlassHandle _super_klass;
 	ConstantPool* _cp;
 	Array<u2>* _fields;

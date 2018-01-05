@@ -8,8 +8,10 @@
 #ifndef CPU_X86_VM_JNI_X86_H_
 #define CPU_X86_VM_JNI_X86_H_
 
-typedef int         jint;  // 32bits
-typedef long long   jlong; // 64bits
-typedef signed char jbyte; //  8bits
+// FIXME ILP32 : int, long, pointer = 4B
+
+typedef int         jint;  // 4B
+typedef long long   jlong; // 8B
+typedef signed char jbyte; // 1B
 
 #endif /* CPU_X86_VM_JNI_X86_H_ */

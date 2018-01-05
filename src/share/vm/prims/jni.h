@@ -10,14 +10,13 @@
 
 #include "jni_md.h"
 
-typedef unsigned char  jboolean;
-typedef unsigned short jchar;
-typedef short		   jshort;
-typedef float		   jfloat;
-typedef double		   jdouble;
+typedef unsigned char  jboolean; // 1B
+typedef unsigned short jchar;    // 2B
+typedef short		   jshort;   // 2B
+typedef float		   jfloat;   // 4B
+typedef double		   jdouble;  // 8B
 
-typedef jint		   jsize;
-
+typedef jint		   jsize;    // word
 
 
 #endif /* SHARE_VM_PRIMS_JNI_H_ */

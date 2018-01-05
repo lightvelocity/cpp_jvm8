@@ -8,7 +8,8 @@
 #ifndef SHARE_VM_OOPS_METADATA_HPP_
 #define SHARE_VM_OOPS_METADATA_HPP_
 
-#include "../memory/allocation.hpp"
+#include "utilities/exceptions.hpp"
+#include "utilities/globalDefinitions.hpp"
 
 // This is the base class for an internal Class related metadata
 class Metadata: public MetaspaceObj {

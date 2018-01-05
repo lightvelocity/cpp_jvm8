@@ -9,7 +9,6 @@
 #define SHARE_VM_OOPS_CONSTANTPOOL_HPP_
 
 #include "metadata.hpp"
-#include "../utilities/globalDefinitions.hpp"
 #include "../utilities/array.hpp"
 #include "../utilities/constantTag.hpp"
 #include "../../../cpu/x86/vm/jni_x86.h"

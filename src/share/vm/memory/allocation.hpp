@@ -13,6 +13,4 @@ class MetaspaceObj {
 
 };
 
-
-
 #endif /* SHARE_VM_MEMORY_ALLOCATION_HPP_ */

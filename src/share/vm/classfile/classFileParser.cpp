@@ -136,7 +136,7 @@ void ClassFileParser::parse_constant_pool_entries(int length) {
 				u8 bytes = cfs->get_u8_fast();
 				_cp->long_at_put(index, bytes);
 			}
-			index++ // skip entry following eight-byte constant, see JVM book p.98
+			index++; // skip entry following eight-byte constant, see JVM book p.98
 			break;
 			case JVM_CONSTANT_Double:
 			{

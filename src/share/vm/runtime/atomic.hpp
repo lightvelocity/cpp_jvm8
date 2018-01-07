@@ -8,6 +8,8 @@
 #ifndef SHARE_VM_RUNTIME_ATOMIC_HPP_
 #define SHARE_VM_RUNTIME_ATOMIC_HPP_
 
+#include "memory/allocation.hpp"
+
 class Atomic {
 
 

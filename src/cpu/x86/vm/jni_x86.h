@@ -5,8 +5,14 @@
  *      Author: Administrator
  */
 
-#ifndef CPU_X86_VM_JNI_X86_H_
-#define CPU_X86_VM_JNI_X86_H_
+// OK
+
+#ifndef _JAVASOFT_JNI_MD_H_
+#define _JAVASOFT_JNI_MD_H_
+
+#define JNIEXPORT __declspec(dllexport)
+#define JNIIMPORT __declspec(dllimport)
+#define JNICALL   __stdcall
 
 // FIXME ILP32 : int, long, pointer = 4B
 
@@ -14,4 +20,4 @@ typedef int         jint;  // 4B
 typedef long long   jlong; // 8B
 typedef signed char jbyte; // 1B
 
-#endif /* CPU_X86_VM_JNI_X86_H_ */
+#endif /* !_JAVASOFT_JNI_MD_H_ */

@@ -5,6 +5,8 @@
  *      Author: limaozhi
  */
 
+
+
 #ifndef SHARE_VM_UTILITIES_GLOBALDEFINITIONS_HPP_
 #define SHARE_VM_UTILITIES_GLOBALDEFINITIONS_HPP_
 

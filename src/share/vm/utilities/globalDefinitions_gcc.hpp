@@ -23,6 +23,8 @@ typedef uint16_t 		   jushort;
 typedef uint32_t 		   juint;
 typedef uint64_t 		   julong;
 
+#define VALUE_OBJ_CLASS_SPEC
+
 
 #endif /* SHARE_VM_UTILITIES_GLOBALDEFINITIONS_GCC_HPP_ */
 

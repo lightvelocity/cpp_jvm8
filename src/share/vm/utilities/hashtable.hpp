@@ -142,11 +142,11 @@ private:
 	// Instance variables
 	int	_table_size;
 	HashtableBucket<F>*	_buckets;
-	BasicHashtableEntry<F>*	_free_list;
-	char*	_first_free_entry;
-	char*	_end_block;
-	int		_entry_size;
-	int		_number_of_entries;
+	BasicHashtableEntry<F>*	_free_list; // entry的内存分配有两个来源，一为_free_list，此为回收entry的内存复用
+	char*	_first_free_entry; // 二为内存块，每次分配一整块内存，然后再从其切分出entry
+	char*	_end_block; // 内存块：此为内存块的结束地址
+	int		_entry_size; // 内存块：entry的大小
+	int		_number_of_entries; // entry数量
 
 protected:
 

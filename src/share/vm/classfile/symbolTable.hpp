@@ -5,8 +5,14 @@
  *      Author: limaozhi
  */
 
+// OK
+
 #ifndef SHARE_VM_CLASSFILE_SYMBOLTABLE_HPP_
 #define SHARE_VM_CLASSFILE_SYMBOLTABLE_HPP_
+
+#include "memory/allocation.inline.hpp"
+#include "oops/symbol.hpp"
+#include "utilities/hashtable.hpp"
 
 #include "memory/allocation.inline.hpp"
 #include "oops/symbol.hpp"

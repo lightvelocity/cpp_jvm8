@@ -99,9 +99,9 @@ public:
 };
 
 class Symbol: private SymbolBase {
-	//friend class VMStructs;
-	//friend class SymbolTable;
-	//friend class MoveSymbols;
+	friend class VMStructs;
+	friend class SymbolTable;
+	friend class MoveSymbols;
 private:
 	jbyte _body[1];
 

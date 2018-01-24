@@ -5,6 +5,8 @@
  *      Author: limaozhi
  */
 
+// OK
+
 #ifndef SHARE_VM_OOPS_CONSTANTPOOL_HPP_
 #define SHARE_VM_OOPS_CONSTANTPOOL_HPP_
 
@@ -43,7 +45,7 @@
 class SymbolHashMap;
 
 class CPSlot VALUE_OBJ_CLASS_SPEC {
-  intptr_t _ptr; // intptr_t，与指针同宽
+  intptr_t _ptr;
  public:
   CPSlot(intptr_t ptr): _ptr(ptr) {}
   CPSlot(Klass* ptr): _ptr((intptr_t)ptr) {}
@@ -871,5 +873,103 @@ class ConstantPool : public Metadata {
 #endif
 };
 
+class SymbolHashMapEntry : public CHeapObj<mtSymbol> {
+ private:
+  unsigned int        _hash;   // 32-bit hash for item
+  SymbolHashMapEntry* _next;   // Next element in the linked list for this bucket
+  Symbol*             _symbol; // 1-st part of the mapping: symbol => value
+  u2                  _value;  // 2-nd part of the mapping: symbol => value
+
+ public:
+  unsigned   int hash() const             { return _hash;   }
+  void       set_hash(unsigned int hash)  { _hash = hash;   }
+
+  SymbolHashMapEntry* next() const        { return _next;   }
+  void set_next(SymbolHashMapEntry* next) { _next = next;   }
+
+  Symbol*    symbol() const               { return _symbol; }
+  void       set_symbol(Symbol* sym)      { _symbol = sym;  }
+
+  u2         value() const                {  return _value; }
+  void       set_value(u2 value)          { _value = value; }
+
+  SymbolHashMapEntry(unsigned int hash, Symbol* symbol, u2 value)
+    : _hash(hash), _symbol(symbol), _value(value), _next(NULL) {}
+
+}; // End SymbolHashMapEntry class
+
+
+class SymbolHashMapBucket : public CHeapObj<mtSymbol> {
+
+private:
+  SymbolHashMapEntry*    _entry;
+
+public:
+  SymbolHashMapEntry* entry() const         {  return _entry; }
+  void set_entry(SymbolHashMapEntry* entry) { _entry = entry; }
+  void clear()                              { _entry = NULL;  }
+
+}; // End SymbolHashMapBucket class
+
+
+class SymbolHashMap: public CHeapObj<mtSymbol> {
+
+ private:
+  // Default number of entries in the table
+  enum SymbolHashMap_Constants {
+    _Def_HashMap_Size = 256
+  };
+
+  int                   _table_size;
+  SymbolHashMapBucket*  _buckets;
+
+  void initialize_table(int table_size) {
+    _table_size = table_size;
+    _buckets = NEW_C_HEAP_ARRAY(SymbolHashMapBucket, table_size, mtSymbol);
+    for (int index = 0; index < table_size; index++) {
+      _buckets[index].clear();
+    }
+  }
+
+ public:
+
+  int table_size() const        { return _table_size; }
+
+  SymbolHashMap()               { initialize_table(_Def_HashMap_Size); }
+  SymbolHashMap(int table_size) { initialize_table(table_size); }
+
+  // hash P(31) from Kernighan & Ritchie
+  static unsigned int compute_hash(const char* str, int len) {
+    unsigned int hash = 0;
+    while (len-- > 0) {
+      hash = 31*hash + (unsigned) *str;
+      str++;
+    }
+    return hash;
+  }
+
+  SymbolHashMapEntry* bucket(int i) {
+    return _buckets[i].entry();
+  }
+
+  void add_entry(Symbol* sym, u2 value);
+  SymbolHashMapEntry* find_entry(Symbol* sym);
+
+  u2 symbol_to_value(Symbol* sym) {
+    SymbolHashMapEntry *entry = find_entry(sym);
+    return (entry == NULL) ? 0 : entry->value();
+  }
+
+  ~SymbolHashMap() {
+    SymbolHashMapEntry* next;
+    for (int i = 0; i < _table_size; i++) {
+      for (SymbolHashMapEntry* cur = bucket(i); cur != NULL; cur = next) {
+        next = cur->next();
+        delete(cur);
+      }
+    }
+    delete _buckets;
+  }
+}; // End SymbolHashMap class
 
 #endif /* SHARE_VM_OOPS_CONSTANTPOOL_HPP_ */
